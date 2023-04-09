@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      schema: ${DB_SCHEMA}
+
+  kafka:
+    producer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+batch:
+  docker:
+    username: ${DOCKERHUB_USER}
+    password: ${DOCKERHUB_PASSWORD}
+  kafka:
+    topic: ${KAFKA_TOPIC}
