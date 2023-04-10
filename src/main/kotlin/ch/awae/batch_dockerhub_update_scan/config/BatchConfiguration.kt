@@ -22,7 +22,7 @@ class BatchConfiguration : AwaeBatchConfigurationBase() {
     fun job(
         jobRepo: JobRepository,
         updateStep: Step,
-    ) = JobBuilder("updateJob", jobRepo)
+    ) = JobBuilder("dockerhub-update-scan", jobRepo)
         .start(updateStep)
         .listener(FailJobWithSkipsListener())
         .build()

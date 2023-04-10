@@ -10,7 +10,7 @@
     </parent>
     <groupId>ch.awae</groupId>
     <artifactId>batch_dockerhub_update_scan</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>batch-dockerhub-update-scan</name>
     <description>batch-dockerhub-update-scan</description>
     <properties>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>ch.awae</groupId>
             <artifactId>spring-batch-base</artifactId>
-            <version>3.0.5.1</version>
+            <version>3.0.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

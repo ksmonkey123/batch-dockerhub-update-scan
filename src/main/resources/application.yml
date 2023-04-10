@@ -3,14 +3,18 @@ spring:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-    hikari:
-      schema: ${DB_SCHEMA}
 
   kafka:
     producer:
       bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+batch-meta:
+  datasource:
+    url: ${BATCH_META_DB_URL}
+    username: ${BATCH_META_DB_USER}
+    password: ${BATCH_META_DB_PASSWORD}
 
 batch:
   docker:
