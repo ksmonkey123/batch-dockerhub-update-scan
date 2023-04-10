@@ -1,18 +1,18 @@
 package ch.awae.batch_dockerhub_update_scan
 
-import org.springframework.boot.SpringApplication
+import ch.awae.spring.batch.AwaeBatchUtil.runBatch
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.kafka.annotation.EnableKafka
 
-@EnableKafka
 @SpringBootApplication
 @ConfigurationPropertiesScan
-class BatchDockerhubUpdateScanApplication
+class DockerhubUpdateScan
 
 fun main(args: Array<String>) {
-    val app = SpringApplication(BatchDockerhubUpdateScanApplication::class.java)
-    app.webApplicationType = WebApplicationType.NONE
-    app.run(*args)
+    runBatch(DockerhubUpdateScan::class.java, *args) {
+        webApplicationType = WebApplicationType.NONE
+    }
 }
+
+

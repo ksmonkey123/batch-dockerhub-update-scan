@@ -1,11 +1,13 @@
-package ch.awae.batch_dockerhub_update_scan.services
+package ch.awae.batch_dockerhub_update_scan.service
 
 import ch.awae.batch_dockerhub_update_scan.config.KafkaProperties
 import ch.awae.batch_dockerhub_update_scan.model.CurrentEntryState
+import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
 
+@EnableKafka
 @Service
 class KafkaUpdateAnnouncer(val kafkaTemplate: KafkaTemplate<String, String>, val kafkaProperties: KafkaProperties) {
 
