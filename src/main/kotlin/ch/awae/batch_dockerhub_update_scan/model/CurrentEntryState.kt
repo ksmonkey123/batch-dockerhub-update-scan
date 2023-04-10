@@ -11,4 +11,8 @@ data class CurrentEntryState(
 ) {
     val descriptor : String
         get() = "${namespace ?: "_"}/$repository:$watchedTag"
+
+    val webIdentifier: String
+        get() = if (namespace != null) "r/$namespace/$repository" else "_/$repository"
+
 }

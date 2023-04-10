@@ -4,7 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "batch.docker")
 data class DockerProperties(
-    val url: String,
+    val apiUrl: String,
+    val webUrl: String,
     val username: String,
     val password: String,
 )

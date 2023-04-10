@@ -10,7 +10,7 @@ import java.util.logging.Logger
 class DockerhubApiClient(dockerProperties: DockerProperties) {
 
     private val logger = Logger.getLogger(javaClass.name)
-    private val baseURL = dockerProperties.url
+    private val baseURL = dockerProperties.apiUrl
 
     val http: RestTemplate = run {
         val httpBuilder = RestTemplateBuilder()

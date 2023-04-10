@@ -14,7 +14,8 @@ spring:
 
 batch:
   docker:
-    url: "https://hub.docker.com/v2"
+    web-url: "https://hub.docker.com"
+    api-url: "https://hub.docker.com/v2"
     username: ${DOCKERHUB_USER}
     password: ${DOCKERHUB_PASSWORD}
   kafka:
