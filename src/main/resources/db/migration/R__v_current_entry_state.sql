@@ -1,10 +1,11 @@
 -- view combining t_monitored_entry and its most recent t_entry_state
-
-create or replace view v_current_entry_state as
+drop view if exists v_current_entry_state;
+create view v_current_entry_state as
 select e.id,
        e.namespace,
        e.repository,
-       e.tag  as watched_tag,
+       e.tag as watched_tag,
+       e.tag_changes_only,
        s.revision_number,
        s.digest,
        s.tags as current_tags

@@ -17,6 +17,7 @@ class EntryStateReader(ds: DataSource) : JdbcCursorItemReader<CurrentEntryState>
                 namespace = rs.getString("namespace"),
                 repository = rs.getString("repository"),
                 watchedTag = rs.getString("watched_tag"),
+                tagChangesOnly = rs.getBoolean("tag_changes_only"),
                 revisionNumber = rs.getInt("revision_number"),
                 digest = rs.getString("digest"),
                 currentTags = rs.getString("current_tags")?.split(";")

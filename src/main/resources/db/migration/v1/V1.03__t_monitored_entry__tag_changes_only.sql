@@ -1,0 +1,1 @@
+alter table t_monitored_entry add column tag_changes_only boolean not null default false;

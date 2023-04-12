@@ -24,14 +24,18 @@ class UpdateProcessor(
         val newTagSet = loadTagSet(item) ?: return null
 
         if (lastTagSet == null || newTagSet != lastTagSet) {
+            if (item.tagChangesOnly && (newTagSet.tags == lastTagSet?.tags)) {
+                logger.info("tags unchanged, suppressing message for ${item.descriptor} (only requesting tag changes)")
+                return null
+            }
             // mismatch found, process update
             logger.info("relevant changes detected for ${item.descriptor}")
             updateAnnouncer.announceUpdate(item, lastTagSet?.tags ?: emptySet(), newTagSet.tags)
             return UpdatedEntryState(item.entryId, item.revisionNumber + 1, newTagSet.digest, newTagSet.tags.toList())
+        } else {
+            logger.info("no changes found for ${item.descriptor}")
+            return null
         }
-
-        logger.info("no changes found for ${item.descriptor}")
-        return null
     }
 
     private fun buildPreviousTagSet(item: CurrentEntryState): TagSet? {

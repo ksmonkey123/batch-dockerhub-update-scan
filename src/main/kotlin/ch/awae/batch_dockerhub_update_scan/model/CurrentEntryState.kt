@@ -5,6 +5,7 @@ data class CurrentEntryState(
     val namespace: String?,
     val repository: String,
     val watchedTag: String,
+    val tagChangesOnly: Boolean,
     val revisionNumber: Int,
     val digest: String?,
     val currentTags: List<String>?

@@ -10,7 +10,7 @@
     </parent>
     <groupId>ch.awae</groupId>
     <artifactId>batch_dockerhub_update_scan</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>batch-dockerhub-update-scan</name>
     <description>batch-dockerhub-update-scan</description>
     <properties>
