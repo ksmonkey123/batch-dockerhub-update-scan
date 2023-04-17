@@ -29,7 +29,7 @@ class KafkaUpdateAnnouncer(
                 enumerate("\nunchanged tags:", unchangedTags) +
                 "\n\n${dockerProperties.webUrl}/${item.webIdentifier}/tags"
 
-        logger.info("sending message: $message")
+        logger.info("sending message: \"${message.replace("\n", "\\n")}\"")
         kafkaTemplate.send(kafkaProperties.topic, message)
     }
 
