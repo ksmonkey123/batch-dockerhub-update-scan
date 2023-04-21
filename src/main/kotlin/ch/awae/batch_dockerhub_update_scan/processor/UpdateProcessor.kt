@@ -13,27 +13,27 @@ import java.util.logging.Logger
 
 @Component
 class UpdateProcessor(
-    val dockerhubApi: DockerhubApiClient,
-    val updateAnnouncer: KafkaUpdateAnnouncer,
+    private val dockerhubApi: DockerhubApiClient,
+    private val updateAnnouncer: KafkaUpdateAnnouncer,
 ) : ItemProcessor<CurrentEntryState, UpdatedEntryState> {
 
     private val logger = Logger.getLogger(javaClass.name)
     override fun process(item: CurrentEntryState): UpdatedEntryState? {
-        logger.info("processing entry ${item.descriptor}")
+        logger.fine("processing entry ${item.descriptor}")
         val lastTagSet = buildPreviousTagSet(item)
         val newTagSet = loadTagSet(item) ?: return null
 
         if (lastTagSet == null || newTagSet != lastTagSet) {
             if (item.tagChangesOnly && (newTagSet.tags == lastTagSet?.tags)) {
-                logger.info("tags unchanged, suppressing message for ${item.descriptor} (only requesting tag changes)")
+                logger.info("\"${item.descriptor}\" tags unchanged, only requesting tag changes")
                 return null
             }
             // mismatch found, process update
-            logger.info("relevant changes detected for ${item.descriptor}")
+            logger.info("\"${item.descriptor}\" relevant changes detected")
             updateAnnouncer.announceUpdate(item, lastTagSet?.tags ?: emptySet(), newTagSet.tags)
             return UpdatedEntryState(item.entryId, item.revisionNumber + 1, newTagSet.digest, newTagSet.tags.toList())
         } else {
-            logger.info("no changes found for ${item.descriptor}")
+            logger.info("\"${item.descriptor}\" unchanged")
             return null
         }
     }
@@ -55,7 +55,7 @@ class UpdateProcessor(
             // find all tags with the same digest as the reference tag
             val relevantTags = tags[referenceTag.digest]!!.map { it.tag }
 
-            logger.info("identified ${relevantTags.size} relevant tags: $relevantTags")
+            logger.fine("identified ${relevantTags.size} relevant tags: $relevantTags")
 
             return TagSet(referenceTag.digest, relevantTags.toSet())
         } catch (e: Exception) {

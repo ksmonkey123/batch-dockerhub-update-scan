@@ -7,16 +7,22 @@ import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
+import javax.sql.DataSource
 
 @EnableKafka
 @Service
 class KafkaUpdateAnnouncer(
-    val kafkaTemplate: KafkaTemplate<String, String>,
-    val kafkaProperties: KafkaProperties,
-    val dockerProperties: DockerProperties,
+    private val kafkaTemplate: KafkaTemplate<String, String>,
+    private val kafkaProperties: KafkaProperties,
+    private val dockerProperties: DockerProperties,
 ) {
 
     private val logger = Logger.getLogger(javaClass.name)
+
+    init {
+        // force init of kafka producer during startup (prevents the massive kafka log dump to interfere with the batch log
+        kafkaTemplate.partitionsFor(kafkaProperties.topic)
+    }
 
     fun announceUpdate(item: CurrentEntryState, oldTags: Set<String>, newTags: Set<String>) {
         val unchangedTags = oldTags.intersect(newTags)

@@ -30,11 +30,11 @@ class DockerhubApiClient(dockerProperties: DockerProperties) {
     }
 
     fun getTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
-        logger.info("loading tags for ${namespace ?: "_"}/$repository")
+        logger.fine("loading tags for ${namespace ?: "_"}/$repository")
         val rawTags = fetchTags("$baseURL/namespaces/${namespace ?: "library"}/repositories/${repository}/tags?page_size=100")
         val tags = rawTags.filter { it.digest != null }.map { Tag(it.name, it.digest!!)}
         val digests = tags.groupBy { it.digest }
-        logger.info("found ${digests.size} digests in ${tags.size} processable tags (${rawTags.size} tags in total)")
+        logger.fine("found ${digests.size} digests in ${tags.size} processable tags (${rawTags.size} tags in total)")
         return digests
     }
 
