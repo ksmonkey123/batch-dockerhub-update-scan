@@ -12,7 +12,7 @@ import java.util.logging.Logger
 @EnableKafka
 @Service
 class KafkaUpdateAnnouncer(
-    private val kafkaTemplate: KafkaTemplate<String, String>,
+    private val kafkaTemplate: KafkaTemplate<String, Any>,
     private val kafkaProperties: KafkaProperties,
     private val dockerProperties: DockerProperties,
 ) {

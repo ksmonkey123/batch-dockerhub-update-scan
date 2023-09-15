@@ -4,12 +4,6 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
-  kafka:
-    producer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-
 batch-meta:
   datasource:
     url: ${BATCH_META_DB_URL}
@@ -24,6 +18,7 @@ batch:
     password: ${DOCKERHUB_PASSWORD}
   kafka:
     topic: ${KAFKA_TOPIC}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 
 logging:
   level:

@@ -12,5 +12,6 @@ data class DockerProperties(
 
 @ConfigurationProperties(prefix = "batch.kafka")
 data class KafkaProperties(
-    val topic: String
+    val topic: String,
+    val bootstrapServers: String,
 )
