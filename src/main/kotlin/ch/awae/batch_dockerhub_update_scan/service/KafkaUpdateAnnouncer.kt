@@ -6,8 +6,8 @@ import ch.awae.batch_dockerhub_update_scan.model.CurrentEntryState
 import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import java.util.logging.Level
 import java.util.logging.Logger
-import javax.sql.DataSource
 
 @EnableKafka
 @Service
@@ -18,11 +18,6 @@ class KafkaUpdateAnnouncer(
 ) {
 
     private val logger = Logger.getLogger(javaClass.name)
-
-    init {
-        // force init of kafka producer during startup (prevents the massive kafka log dump to interfere with the batch log
-        kafkaTemplate.partitionsFor(kafkaProperties.topic)
-    }
 
     fun announceUpdate(item: CurrentEntryState, oldTags: Set<String>, newTags: Set<String>) {
         val unchangedTags = oldTags.intersect(newTags)
@@ -36,7 +31,13 @@ class KafkaUpdateAnnouncer(
                 "\n\n${dockerProperties.webUrl}/${item.webIdentifier}/tags"
 
         logger.info("sending message: \"${message.replace("\n", "\\n")}\"")
-        kafkaTemplate.send(kafkaProperties.topic, message)
+        try {
+            kafkaTemplate.send(kafkaProperties.topic, message).get()
+            logger.info("message sent!")
+        } catch (e: Throwable) {
+            logger.log(Level.SEVERE, "error sending message", e)
+            throw e
+        }
     }
 
     private fun enumerate(listHeader: String, items: Set<String>): String {

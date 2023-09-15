@@ -24,3 +24,7 @@ batch:
     password: ${DOCKERHUB_PASSWORD}
   kafka:
     topic: ${KAFKA_TOPIC}
+
+logging:
+  level:
+    org.apache.kafka.clients.producer.ProducerConfig: WARN
