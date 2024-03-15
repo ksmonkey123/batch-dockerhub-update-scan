@@ -24,7 +24,7 @@ class KafkaUpdateAnnouncer(
         val addedTags = newTags.subtract(oldTags)
         val removedTags = oldTags.subtract(newTags)
 
-        val message = "docker tag <code>" + item.descriptor + "</code> updated:" +
+        val message = "docker image <code>" + item.descriptor + "</code> updated.\n" +
                 enumerate("\nadded tags:", addedTags) +
                 enumerate("\nremoved tags:", removedTags) +
                 enumerate("\nunchanged tags:", unchangedTags) +
@@ -41,7 +41,7 @@ class KafkaUpdateAnnouncer(
     }
 
     private fun enumerate(listHeader: String, items: Set<String>): String {
-        return if (items.isEmpty()) "" else items.fold(listHeader) { acc, item -> "$acc\n - $item" }
+        return if (items.isEmpty()) "" else items.fold(listHeader) { acc, item -> "$acc\n - <code>$item</code>" }
 
     }
 
